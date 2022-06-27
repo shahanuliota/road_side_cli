@@ -1,5 +1,6 @@
 import { Command, CommandRunner, Option } from 'nest-commander';
 import { Logger, LoggerService } from '@nestjs/common';
+import { HttpService } from '@nestjs/axios';
 
 interface BasicCommandOptions {
   string?: string;
@@ -10,12 +11,12 @@ interface BasicCommandOptions {
 @Command({ name: 'basic', description: 'A parameter parse' })
 export class BasicCommand implements CommandRunner {
   private readonly logService: LoggerService = new Logger('BaseCommand');
+  constructor(private readonly httpService: HttpService) {}
 
   async run(
     passedParam: string[],
     options?: BasicCommandOptions,
   ): Promise<void> {
-    console.log('---------');
     if (options?.boolean !== undefined && options?.boolean !== null) {
       this.runWithBoolean(passedParam, options.boolean);
     } else if (options?.number) {
@@ -56,7 +57,6 @@ export class BasicCommand implements CommandRunner {
   }
 
   runWithNumber(param: string[], option: number): void {
-    console.log('ok');
     this.logService.log({ param, number: option });
   }
 
