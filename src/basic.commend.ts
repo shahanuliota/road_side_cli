@@ -1,6 +1,5 @@
 import { Command, CommandRunner, Option } from 'nest-commander';
-import { Logger, LoggerService } from '@nestjs/common';
-import { HttpService } from '@nestjs/axios';
+import { CACHE_MANAGER, Inject, Logger, LoggerService } from '@nestjs/common';
 
 interface BasicCommandOptions {
   string?: string;
@@ -8,10 +7,10 @@ interface BasicCommandOptions {
   number?: number;
 }
 
-@Command({ name: 'basic', description: 'A parameter parse' })
+@Command({ name: 'config', description: 'A parameter parse' })
 export class BasicCommand implements CommandRunner {
   private readonly logService: LoggerService = new Logger('BaseCommand');
-  constructor(private readonly httpService: HttpService) {}
+  constructor(@Inject(CACHE_MANAGER) private cacheManager: Cache) {}
 
   async run(
     passedParam: string[],
@@ -38,7 +37,7 @@ export class BasicCommand implements CommandRunner {
 
   @Option({
     flags: '-s, --string [string]',
-    description: 'A string return',
+    description: 'set jwt token',
   })
   parseString(val: string): string {
     return val;

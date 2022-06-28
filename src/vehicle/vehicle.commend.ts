@@ -25,16 +25,6 @@ export class VehicleCommand implements CommandRunner {
       console.log('----runWithNone--');
       this.runWithNone(passedParam);
     }
-
-    // if (options?.boolean !== undefined && options?.boolean !== null) {
-    //   this.runWithBoolean(passedParam, options.boolean);
-    // } else if (options?.number) {
-    //   this.runWithNumber(passedParam, options.number);
-    // } else if (options?.string) {
-    //   this.runWithString(passedParam, options.string);
-    // } else {
-    //   this.runWithNone(passedParam);
-    // }
   }
 
   runWithNumber(param: string[], option: number): void {
@@ -42,8 +32,8 @@ export class VehicleCommand implements CommandRunner {
   }
 
   @Option({
-    flags: '-n, --new [number]',
-    description: 'A basic number parser',
+    flags: '-n, --number [number]',
+    description: 'add new vehicle',
   })
   parseNumber(val: string): number {
     return Number(val);
